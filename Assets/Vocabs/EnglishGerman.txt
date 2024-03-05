@@ -1,0 +1,4 @@
+hello​;hallo​
+crazy​;verrückt​
+word​;wort​
+cat​;Katze​
