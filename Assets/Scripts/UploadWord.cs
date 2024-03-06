@@ -121,6 +121,7 @@ public class UploadWord : MonoBehaviour
         }
         Word editWord = Word.stringToWord(data[index]);
         editWord.setPhase(phase);
+        editWord.setLastTrained(DateTime.Today);
         editWord.calculateDueTime();
         data[index] = editWord.toString();
         File.WriteAllLines(path1 + filename + ".txt", data);
