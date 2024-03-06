@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using TMPro;
+using System;
+using UnityEngine.UI;
 public class training : MonoBehaviour
 {
     public TMP_Text foreign_language;
@@ -12,6 +14,9 @@ public class training : MonoBehaviour
     public TMP_Text question;
     public TMP_Text answer;
     private string solution;
+    Word askedWord;
+    public Toggle due_words;
+    public GameObject warningMessage;
 
     //use Application.persistentDatapath for build
     private string path;
@@ -23,47 +28,60 @@ public class training : MonoBehaviour
     void Start()
     {
         path = Application.persistentDataPath + "/";
-        askWord();
+        //path = "./Assets/Vocabs/";
+        askWord(due_words);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void pandaFeedback()
     {
-        
-    }
-    public void askWord()
-    {
-        if (!startPanda.active)
+        if (!startPanda.activeSelf)
         {
             startPanda.SetActive(true);
         }
-        if (correctAnswer.active)
+        if (correctAnswer.activeSelf)
         {
             correctAnswer.SetActive(false);
         }
-        if (falseAnswer.active)
+        if (falseAnswer.activeSelf)
         {
             falseAnswer.SetActive(false);
         }
-        words= loadWords();
-        int index = randomIndex();
-        string word = words[index];
-        string[] split = word.Split(";");
-        int language=Random.Range(0, 1);
-        if(language == 1)
+    }
+    public void askWord(Toggle due)
+    {
+        pandaFeedback();
+        if (due.isOn)
         {
-            question.text = "Translate: " + split[1];
-            solution = split[0];
+            words = loadDueWords();
         }
         else
         {
-            question.text = "Translate: " + split[0];
-            solution = split[1];
+            words = loadAllWords();
         }
-        
+        if (words.Length > 0)
+        {
+            int currentIndex = randomIndex();
+            askedWord = Word.stringToWord(words[currentIndex]);
+            int language = UnityEngine.Random.Range(0, 1);
+            if (language == 1)
+            {
+                question.text = "Translate: " + askedWord.translation;
+                solution = askedWord.word;
+            }
+            else
+            {
+                question.text = "Translate: " + askedWord.word;
+                solution = askedWord.translation;
+            }
+        }
+        else
+        {
+            warningMessage.SetActive(true);
+            question.text = "Translate: ";
+        }
+            
+        }
 
-    }
-    
     public void checkWord()
     {
         //ignore casing?
@@ -71,45 +89,48 @@ public class training : MonoBehaviour
         if (ans.Equals(solution.ToLower()))
         {
             correctAnswer.SetActive(true);
-            if (falseAnswer.active)
+            UploadWord.editWordPhase(askedWord.word, askedWord.phase + 1, native_language, foreign_language);
+            if (falseAnswer.activeSelf)
             {
-                falseAnswer.SetActive(false);    
+                falseAnswer.SetActive(false);
             }
         }
         else
         {
             falseAnswer.SetActive(true);
-            if (correctAnswer.active)
+            UploadWord.editWordPhase(askedWord.word, 0, native_language, foreign_language);
+            if (correctAnswer.activeSelf)
             {
                 correctAnswer.SetActive(false);
             }
         }
-        if (startPanda.active)
+        if (startPanda.activeSelf)
         {
             startPanda.SetActive(false);
         }
+        //Refresh only for editor
+        //UnityEditor.AssetDatabase.Refresh();
         //use different sprites e.g. random happy sprites
     }
 
     int randomIndex()
     {
-        return Random.Range(0, words.Length-1);
+        return UnityEngine.Random.Range(0, words.Length - 1);
     }
 
-    string[] loadWords()
+    string[] loadAllWords()
     {
         string filename = native_language.text + foreign_language.text;
-        Debug.Log("first "+filename);
-        if (File.Exists(path+filename+".txt"))
+        if (File.Exists(path + filename + ".txt"))
         {
             return File.ReadAllLines(path + filename + ".txt");
-        }else if (!File.Exists(filename))
+        }
+        else if (!File.Exists(filename))
         {
-            filename = foreign_language.text+native_language.text;
-            Debug.Log("second: "+filename);
-            if (File.Exists(path+filename+".txt"))
+            filename = foreign_language.text + native_language.text;
+            if (File.Exists(path + filename + ".txt"))
             {
-               return words = File.ReadAllLines(path+ filename + ".txt");
+                return words = File.ReadAllLines(path + filename + ".txt");
             }
             else
             {
@@ -117,6 +138,44 @@ public class training : MonoBehaviour
             }
         }
         return null;
-        
+
+    }
+    string[] loadDueWords()
+    {
+        string filename = native_language.text + foreign_language.text;
+        if (File.Exists(path + filename + ".txt"))
+        {
+            return getDueWords();
+        }
+        else if (!File.Exists(filename))
+        {
+            filename = foreign_language.text + native_language.text;
+            if (File.Exists(path + filename + ".txt"))
+            {
+                return getDueWords();
+            }
+            else
+            {
+                Debug.LogError("File does not exist!!");
+            }
+        }
+        return null;
+
+    }
+    string[] getDueWords()
+    {
+        string filename = native_language.text + foreign_language.text;
+        List<String> listOfWords = new List<String>();
+        string[] data = File.ReadAllLines(path + filename + ".txt");
+        foreach (string words in data)
+        {
+            Word w = Word.stringToWord(words);
+            int compare = DateTime.Compare(DateTime.Today, w.dueTime);
+            if (compare >= 0)
+            {
+                listOfWords.Add(w.toString());
+            }
+        }
+        return listOfWords.ToArray();
     }
 }
