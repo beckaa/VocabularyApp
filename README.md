@@ -4,5 +4,7 @@ The integrated panda is used as a mascot and gives feedback to the user if the a
 
 ## The App:
 
-![Screenshot 2024-03-05 204054](https://github.com/beckaa/VocabularyApp/assets/44342265/bb4cd730-a062-4540-b0e2-d765cce121db)
-![Screenshot 2024-03-05 204123](https://github.com/beckaa/VocabularyApp/assets/44342265/97f5f5a9-b329-4719-991a-16996c2b9ee6)
+
+![Screenshot 2024-03-07 170252](https://github.com/beckaa/VocabularyApp/assets/44342265/38906808-7f46-4246-bbdb-0cb274578096)
+![Screenshot 2024-03-07 170313](https://github.com/beckaa/VocabularyApp/assets/44342265/e6f1611a-a785-4820-aa0d-87867e951c81)
+![Screenshot 2024-03-07 170323](https://github.com/beckaa/VocabularyApp/assets/44342265/db6f3450-511b-4576-ade8-e258ae198408)
