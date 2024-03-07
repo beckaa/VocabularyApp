@@ -15,6 +15,11 @@ Panda Images by catalyststuff
 
 https://www.freepik.com/author/catalyststuff
 
+Flags by alvaro_cabrera
+
+https://www.freepik.com/free-vector/flags-icons_961377.htm#fromView=search&page=1&position=0&uuid=dc02ced6-0171-4e98-980d-a33e489ef2ad
+
+
 Icons from Flaticon
 
 https://www.flaticon.com/
