@@ -7,21 +7,24 @@ using System;
 using UnityEngine.UI;
 public class training : MonoBehaviour
 {
+    [Header("Management")]
     public TMP_Text foreign_language;
     public TMP_Text native_language;
-    private FileStream fs;
     private string[] words;
     public TMP_Text question;
     public TMP_Text answer;
     private string solution;
     Word askedWord;
     public Toggle due_words;
+
+    [Header("warning message")]
     public GameObject warningMessage;
 
     //use Application.persistentDatapath for build
     private string path;
     // private string path="./Assets/Vocabs/";
 
+    [Header("Panda Feedback UI")]
     public GameObject startPanda;
     public GameObject correctAnswer;
     public GameObject falseAnswer;
@@ -32,6 +35,7 @@ public class training : MonoBehaviour
         askWord(due_words);
     }
 
+    //TODO: use different sprites e.g. random happy sprites and emotes
     private void pandaFeedback()
     {
         if (!startPanda.activeSelf)
@@ -77,7 +81,7 @@ public class training : MonoBehaviour
         else
         {
             warningMessage.SetActive(true);
-            question.text = "Translate: ";
+            question.text = "Uuups !? There are no words left.. ";
         }
             
         }
@@ -89,7 +93,16 @@ public class training : MonoBehaviour
         if (ans.Equals(solution.ToLower()))
         {
             correctAnswer.SetActive(true);
-            UploadWord.editWordPhase(askedWord.word, askedWord.phase + 1, native_language, foreign_language);
+            if (due_words.isOn)
+            {
+                UploadWord.editWordPhase(askedWord.word, askedWord.phase + 1, native_language, foreign_language);
+            }
+            else
+            {
+                //do not change the phase if not in the mode to check due_words
+                UploadWord.editWordPhase(askedWord.word, askedWord.phase, native_language, foreign_language);
+            }
+            
             if (falseAnswer.activeSelf)
             {
                 falseAnswer.SetActive(false);
@@ -98,7 +111,16 @@ public class training : MonoBehaviour
         else
         {
             falseAnswer.SetActive(true);
-            UploadWord.editWordPhase(askedWord.word, 0, native_language, foreign_language);
+            if (due_words.isOn)
+            {
+                UploadWord.editWordPhase(askedWord.word, 0, native_language, foreign_language);
+            }
+            else
+            {
+                //do not change the phase if not in the mode to check due_words
+                UploadWord.editWordPhase(askedWord.word, askedWord.phase, native_language, foreign_language);
+            }
+            
             if (correctAnswer.activeSelf)
             {
                 correctAnswer.SetActive(false);
@@ -110,7 +132,7 @@ public class training : MonoBehaviour
         }
         //Refresh only for editor
         //UnityEditor.AssetDatabase.Refresh();
-        //use different sprites e.g. random happy sprites
+        
     }
 
     int randomIndex()

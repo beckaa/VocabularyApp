@@ -60,7 +60,7 @@ public class Word
                 setDueTime(this.lastTrained.AddDays(21));
                 break;
             case 6:
-                setDueTime(this.lastTrained.AddDays(31));
+                setDueTime(this.lastTrained.AddDays(30));
                 break;
 
         }
