@@ -34,6 +34,16 @@ public class training : MonoBehaviour
         //path = "./Assets/Vocabs/";
         askWord(due_words);
     }
+    private void Update()
+    {
+        if (UploadWord.newWordadded)
+        {
+            askWord(due_words);
+            UploadWord.newWordadded = false;
+            warningMessage.SetActive(false);
+        }
+       
+    }
 
     //TODO: use different sprites e.g. random happy sprites and emotes
     private void pandaFeedback()
@@ -66,7 +76,7 @@ public class training : MonoBehaviour
         {
             int currentIndex = randomIndex();
             askedWord = Word.stringToWord(words[currentIndex]);
-            int language = UnityEngine.Random.Range(0, 1);
+            int language = UnityEngine.Random.Range(0, 2);
             if (language == 1)
             {
                 question.text = "Translate: " + askedWord.translation;

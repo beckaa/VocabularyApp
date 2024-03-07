@@ -93,6 +93,7 @@ public class UploadWord : MonoBehaviour
     public TMP_Text foreign_language;
     public TMP_Text word;
     public TMP_Text translated_word;
+    public static bool newWordadded = false;
 
     //use Application.persistentDatapath for build
     private string path;
@@ -144,6 +145,7 @@ public class UploadWord : MonoBehaviour
             sw.Close();
             fs.Close();
         }
+        newWordadded = true;
         //Refresh only for editor
         //UnityEditor.AssetDatabase.Refresh();
 
