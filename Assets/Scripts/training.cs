@@ -16,6 +16,7 @@ public class training : MonoBehaviour
     private string solution;
     Word askedWord;
     public Toggle due_words;
+    public Button Submit;
 
     [Header("warning message")]
     public GameObject warningMessage;
@@ -28,28 +29,37 @@ public class training : MonoBehaviour
     public GameObject startPanda;
     public GameObject correctAnswer;
     public GameObject falseAnswer;
+    public List<Sprite> happyPanda;
+    public List<Sprite> sadPanda;
     void Start()
     {
         path = Application.persistentDataPath + "/";
         //path = "./Assets/Vocabs/";
         askWord(due_words);
     }
+
     private void Update()
     {
         if (UploadWord.newWordadded)
         {
             askWord(due_words);
+            Submit.interactable = true;
             UploadWord.newWordadded = false;
             warningMessage.SetActive(false);
         }
        
     }
 
+    int randomListIndex(List<Sprite> list)
+    {
+        return UnityEngine.Random.Range(0, list.Count);
+    }
     //TODO: use different sprites e.g. random happy sprites and emotes
-    private void pandaFeedback()
+    private void resetPandaFeedback()
     {
         if (!startPanda.activeSelf)
         {
+            
             startPanda.SetActive(true);
         }
         if (correctAnswer.activeSelf)
@@ -63,7 +73,7 @@ public class training : MonoBehaviour
     }
     public void askWord(Toggle due)
     {
-        pandaFeedback();
+        resetPandaFeedback();
         if (due.isOn)
         {
             words = loadDueWords();
@@ -91,6 +101,7 @@ public class training : MonoBehaviour
         else
         {
             warningMessage.SetActive(true);
+            Submit.interactable = false;
             question.text = "Uuups !? There are no words left.. ";
         }
             
@@ -102,6 +113,8 @@ public class training : MonoBehaviour
         string ans = answer.text.ToLower();
         if (ans.Equals(solution.ToLower()))
         {
+            int random = randomListIndex(happyPanda);
+            correctAnswer.transform.GetChild(0).GetComponent<Image>().sprite = happyPanda[random];
             correctAnswer.SetActive(true);
             if (due_words.isOn)
             {
@@ -120,6 +133,8 @@ public class training : MonoBehaviour
         }
         else
         {
+            int random = randomListIndex(sadPanda);
+            falseAnswer.transform.GetChild(0).GetComponent<Image>().sprite = sadPanda[random];
             falseAnswer.SetActive(true);
             if (due_words.isOn)
             {
