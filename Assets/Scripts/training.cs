@@ -74,9 +74,11 @@ public class training : MonoBehaviour
     public void askWord(Toggle due)
     {
         resetPandaFeedback();
+        Submit.interactable = true;
         if (due.isOn)
         {
             words = loadDueWords();
+
         }
         else
         {

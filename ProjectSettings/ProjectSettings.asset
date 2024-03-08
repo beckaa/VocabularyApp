@@ -140,10 +140,7 @@ PlayerSettings:
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
   bundleVersion: 1.0.2
-  preloadedAssets:
-  - {fileID: -4603675143602285869, guid: 08a29f0ea4657234e8669ac2c49fd661, type: 2}
-  - {fileID: 11400000, guid: 42fb8f272e2d64a42a0d7e0811c19eea, type: 2}
-  - {fileID: 11400000, guid: c4d1c35443ac7b5448a4d221f22239c6, type: 2}
+  preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -164,7 +161,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.beckanja.VocabularyApp
+    Android: com.MoonXolotl.PandaVoc
     Lumin: com.DefaultCompany.com.unity.template.mobile2D
     Standalone: com.beckanja.VocabularyApp
     iPhone: com.DefaultCompany.com.unity.template.mobile2D
