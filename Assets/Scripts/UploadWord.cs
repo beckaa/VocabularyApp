@@ -146,6 +146,9 @@ public class UploadWord : MonoBehaviour
             fs.Close();
         }
         newWordadded = true;
+        PlayerPrefs.SetFloat("wordCount", PlayerPrefs.GetFloat("wordCount",0) + 1);
+        PlayerPrefs.SetFloat("dueWords", PlayerPrefs.GetFloat("dueWords",0) + 1);
+        PlayerPrefs.SetFloat("phase0", PlayerPrefs.GetFloat("phase0", 0) + 1);
         //Refresh only for editor
         //UnityEditor.AssetDatabase.Refresh();
 
