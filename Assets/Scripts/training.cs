@@ -115,6 +115,8 @@ public class training : MonoBehaviour
         string ans = answer.text.ToLower();
         if (ans.Equals(solution.ToLower()))
         {
+            UIManager.player.increaseScore(5);
+            UIManager.player.upgradeLevel();
             int random = randomListIndex(happyPanda);
             correctAnswer.transform.GetChild(0).GetComponent<Image>().sprite = happyPanda[random];
             correctAnswer.SetActive(true);

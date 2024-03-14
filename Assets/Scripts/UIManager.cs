@@ -12,8 +12,11 @@ public class UIManager : MonoBehaviour
     public GameObject InputField;
     public GameObject saveButton;
     public GameObject menu;
+    public static Player player;
     private void Start()
     {
+        player = new Player();
+        player.initPlayer();
         //save the last day the user opened the app
         PlayerPrefs.SetString("lastOpened", DateTime.Today.ToString());
 
@@ -24,6 +27,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
+            player.setName(PlayerPrefs.GetString("playername"));
             pandaTalk.text = "Hi " + PlayerPrefs.GetString("playername") + ":) Are you ready to learn ??";
         }
         if (!PlayerPrefs.HasKey("wordCount"))
@@ -31,7 +35,6 @@ public class UIManager : MonoBehaviour
             PlayerPrefs.SetFloat("wordCount", 0f);
         }
     }
-
     void askPlayerName()
     {
         saveButton.SetActive(true);
@@ -47,7 +50,7 @@ public class UIManager : MonoBehaviour
         InputField.SetActive(false);
         menu.SetActive(true);
         pandaTalk.text = "Hi " + PlayerPrefs.GetString("playername") + ":) Are you ready to learn ??";
-        PlayerPrefs.SetString("playername", InputName.text);
+        player.setName(InputName.text);
     }
 
     public void wantToQuit(GameObject objectA)

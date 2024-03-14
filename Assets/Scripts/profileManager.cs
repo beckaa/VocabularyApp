@@ -17,7 +17,6 @@ public class profileManager : MonoBehaviour
     [Header("Word Phases Statistic")]
     public RectTransform[] phases;
 
-    private int index = 0;
     // Start is called before the first frame update
     void Start()
     {
