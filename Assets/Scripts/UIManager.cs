@@ -27,7 +27,6 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            player.setName(PlayerPrefs.GetString("playername"));
             pandaTalk.text = "Hi " + player.getName() + ":) Are you ready to learn ??";
         }
         if (!PlayerPrefs.HasKey("wordCount"))

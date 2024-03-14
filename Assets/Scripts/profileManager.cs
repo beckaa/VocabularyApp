@@ -20,8 +20,8 @@ public class profileManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        headingPlayername.text = PlayerPrefs.GetString("playername","User");
-        pandaTalk.text = "Welcome " +PlayerPrefs.GetString("playername","User")+ "! I am happy to see you here :)";
+        headingPlayername.text = UIManager.player.getName();
+        pandaTalk.text = "Welcome " +UIManager.player.getName()+ "! I am happy to see you here :)";
         PlayerPrefs.SetFloat("dueWords", 0);
         getAllDueWords();
         //get count of words in phases
