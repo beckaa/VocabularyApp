@@ -8,7 +8,7 @@ public class Player
     int score;
     int level;
     int wordsTrained;
-    int maxLevel = 10;
+    int maxLevel = 20;
     public void upgradeLevel()
     {
         if(this.score > this.level * 100 && this.level<maxLevel)
