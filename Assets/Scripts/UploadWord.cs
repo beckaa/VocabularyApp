@@ -64,31 +64,31 @@ public class UploadWord : MonoBehaviour
     public void addWord()
     {
         string filename = string.Concat(native_Language.text, foreign_language.text);
-        if (!wordExists(filename))
-        {
-            UIManager.player.increaseScore(2);
-            UIManager.player.upgradeLevel();
-            Word newWord = new Word(word.text, translated_word.text, 0, DateTime.Today, DateTime.Today);
+        Word newWord = new Word(word.text, translated_word.text, 0, DateTime.Today, DateTime.Today);
 
-            if (fileExists(filename))
+        if (fileExists(filename))
+        {
+            if (!wordExists(filename))
             {
+                UIManager.player.increaseScore(2);
+                UIManager.player.upgradeLevel();
                 StreamWriter sw = File.AppendText(path + filename + ".txt");
                 sw.WriteLine(newWord.toString());
                 sw.Close();
             }
-            else
-            {
-                FileStream fs = File.Create(path + filename + ".txt");
-                StreamWriter sw = new StreamWriter(fs);
-                sw.WriteLine(newWord.toString());
-                sw.Close();
-                fs.Close();
-            }
-            newWordadded = true;
-            PlayerPrefs.SetFloat("wordCount", PlayerPrefs.GetFloat("wordCount", 0) + 1);
-            PlayerPrefs.SetFloat("dueWords", PlayerPrefs.GetFloat("dueWords", 0) + 1);
-            PlayerPrefs.SetFloat("phase0", PlayerPrefs.GetFloat("phase0", 0) + 1);
         }
+        else
+        {
+            FileStream fs = File.Create(path + filename + ".txt");
+            StreamWriter sw = new StreamWriter(fs);
+            sw.WriteLine(newWord.toString());
+            sw.Close();
+            fs.Close();
+        }
+        newWordadded = true;
+        PlayerPrefs.SetFloat("wordCount", PlayerPrefs.GetFloat("wordCount", 0) + 1);
+        PlayerPrefs.SetFloat("dueWords", PlayerPrefs.GetFloat("dueWords", 0) + 1);
+        PlayerPrefs.SetFloat("phase0", PlayerPrefs.GetFloat("phase0", 0) + 1);
         //Refresh only for editor
         //UnityEditor.AssetDatabase.Refresh();
 
