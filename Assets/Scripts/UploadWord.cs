@@ -47,7 +47,7 @@ public class Word
                 break;
             case 1:
                 setDueTime(this.lastTrained.AddDays(2));
-                    break;
+                break;
             case 2:
                 setDueTime(this.lastTrained.AddDays(5));
                 break;
@@ -80,12 +80,12 @@ public class Word
     }
     public string toString()
     {
-        return this.word+";"+this.translation + ";" + this.phase + ";"+this.lastTrained+";"+this.dueTime;
+        return this.word + ";" + this.translation + ";" + this.phase + ";" + this.lastTrained + ";" + this.dueTime;
     }
     public static Word stringToWord(string s)
     {
         string[] temp = s.Split(";");
-        return new Word(temp[0], temp[1], int.Parse(temp[2]),DateTime.Parse(temp[3]),DateTime.Parse(temp[4]));
+        return new Word(temp[0], temp[1], int.Parse(temp[2]), DateTime.Parse(temp[3]), DateTime.Parse(temp[4]));
     }
 }
 public class UploadWord : MonoBehaviour
@@ -112,9 +112,9 @@ public class UploadWord : MonoBehaviour
         string path1 = Application.persistentDataPath + "/";
         int index = 0;
         string filename = string.Concat(native.text, foreign.text);
-        string[] data = File.ReadAllLines(path1+filename+".txt");
+        string[] data = File.ReadAllLines(path1 + filename + ".txt");
         //search for entry
-        foreach(string word in data)
+        foreach (string word in data)
         {
             if (word.Contains(askedWord))
             {
@@ -185,6 +185,6 @@ public class UploadWord : MonoBehaviour
     }
     bool fileExists(string filename)
     {
-        return File.Exists(path+filename+".txt");
+        return File.Exists(path + filename + ".txt");
     }
 }

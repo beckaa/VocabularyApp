@@ -47,7 +47,7 @@ public class training : MonoBehaviour
             UploadWord.newWordadded = false;
             warningMessage.SetActive(false);
         }
-       
+
     }
 
     int randomListIndex(List<Sprite> list)
@@ -59,7 +59,7 @@ public class training : MonoBehaviour
     {
         if (!startPanda.activeSelf)
         {
-            
+
             startPanda.SetActive(true);
         }
         if (correctAnswer.activeSelf)
@@ -106,8 +106,8 @@ public class training : MonoBehaviour
             Submit.interactable = false;
             question.text = "Uuups !? There are no words left.. ";
         }
-            
-        }
+
+    }
 
     public void checkWord()
     {
@@ -121,7 +121,7 @@ public class training : MonoBehaviour
             if (due_words.isOn)
             {
                 UploadWord.editWordPhase(askedWord.word, askedWord.phase + 1, native_language, foreign_language);
-                PlayerPrefs.SetFloat("phase" + askedWord.phase.ToString(), PlayerPrefs.GetFloat("phase" + askedWord.phase.ToString()) - 1) ;
+                PlayerPrefs.SetFloat("phase" + askedWord.phase.ToString(), PlayerPrefs.GetFloat("phase" + askedWord.phase.ToString()) - 1);
                 int newPhase = askedWord.phase + 1;
                 PlayerPrefs.SetFloat("phase" + newPhase.ToString(), PlayerPrefs.GetFloat("phase" + newPhase.ToString()) + 1);
                 PlayerPrefs.SetFloat("dueWords", PlayerPrefs.GetFloat("dueWords") - 1);
@@ -131,7 +131,7 @@ public class training : MonoBehaviour
                 //do not change the phase if not in the mode to check due_words
                 UploadWord.editWordPhase(askedWord.word, askedWord.phase, native_language, foreign_language);
             }
-            
+
             if (falseAnswer.activeSelf)
             {
                 falseAnswer.SetActive(false);
@@ -145,7 +145,7 @@ public class training : MonoBehaviour
             if (due_words.isOn)
             {
                 UploadWord.editWordPhase(askedWord.word, 0, native_language, foreign_language);
-                PlayerPrefs.SetFloat("phase"+ askedWord.phase.ToString(), PlayerPrefs.GetFloat("phase"+askedWord.phase.ToString()) - 1);
+                PlayerPrefs.SetFloat("phase" + askedWord.phase.ToString(), PlayerPrefs.GetFloat("phase" + askedWord.phase.ToString()) - 1);
                 PlayerPrefs.SetFloat("phase0", PlayerPrefs.GetFloat("phase0") + 1);
             }
             else
@@ -153,7 +153,7 @@ public class training : MonoBehaviour
                 //do not change the phase if not in the mode to check due_words
                 UploadWord.editWordPhase(askedWord.word, askedWord.phase, native_language, foreign_language);
             }
-            
+
             if (correctAnswer.activeSelf)
             {
                 correctAnswer.SetActive(false);
@@ -165,7 +165,7 @@ public class training : MonoBehaviour
         }
         //Refresh only for editor
         //UnityEditor.AssetDatabase.Refresh();
-        
+
     }
 
     int randomIndex()

@@ -16,7 +16,7 @@ public class UIManager : MonoBehaviour
     {
         //save the last day the user opened the app
         PlayerPrefs.SetString("lastOpened", DateTime.Today.ToString());
-        
+
 
         if (!PlayerPrefs.HasKey("playername"))
         {
@@ -38,7 +38,7 @@ public class UIManager : MonoBehaviour
         menu.SetActive(false);
         InputField.SetActive(true);
         pandaTalk.text = "Hey! What's your name?";
-        
+
     }
 
     public void savePlayerName()
