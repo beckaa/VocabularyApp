@@ -19,6 +19,10 @@ public class Player
     }
     public void initPlayer()
     {
+        if (PlayerPrefs.HasKey("playername"))
+        {
+            this.name = PlayerPrefs.GetString("playername");
+        }
         if (PlayerPrefs.HasKey("score"))
         {
             this.score= PlayerPrefs.GetInt("score");
@@ -69,6 +73,20 @@ public class Player
     public void increaseScore(int number)
     {
         this.score += number;
+        PlayerPrefs.SetInt("score", this.score);
+    }
+    public void decreaseScore(int number)
+    {
+        if(this.score - number > 0)
+        {
+            this.score -= number;
+        }
+        else
+        {
+            this.score = 0;
+        }
+        PlayerPrefs.SetInt("score", this.score);
+        
     }
 
     public int getScore()

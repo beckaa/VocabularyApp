@@ -141,6 +141,7 @@ public class training : MonoBehaviour
         }
         else
         {
+            UIManager.player.decreaseScore(10);
             int random = randomListIndex(sadPanda);
             falseAnswer.transform.GetChild(0).GetComponent<Image>().sprite = sadPanda[random];
             falseAnswer.SetActive(true);
