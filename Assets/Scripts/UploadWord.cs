@@ -67,6 +67,7 @@ public class UploadWord : MonoBehaviour
         if (!wordExists(filename))
         {
             UIManager.player.increaseScore(2);
+            UIManager.player.upgradeLevel();
             Word newWord = new Word(word.text, translated_word.text, 0, DateTime.Today, DateTime.Today);
 
             if (fileExists(filename))

@@ -8,12 +8,12 @@ public class Player
     int score;
     int level;
     int wordsTrained;
-
+    int maxLevel = 10;
     public void upgradeLevel()
     {
-        if(this.score > level * 100)
+        if(this.score > this.level * 100 && this.level<maxLevel)
         {
-            this.level++;
+            level++;
             PlayerPrefs.SetInt("level", this.level);
         }
     }
