@@ -13,6 +13,7 @@ public class Word
     public int phase;
     public DateTime lastTrained;
     public DateTime dueTime;
+
     public Word(string word, string translation, int phase, DateTime lastTrained, DateTime dueTime)
     {
         this.word = word;
@@ -94,6 +95,7 @@ public class UploadWord : MonoBehaviour
     public TMP_Text word;
     public TMP_Text translated_word;
     public static bool newWordadded = false;
+    public TMP_Text submitMessage;
 
     //use Application.persistentDatapath for build
     private string path;
@@ -127,33 +129,60 @@ public class UploadWord : MonoBehaviour
         data[index] = editWord.toString();
         File.WriteAllLines(path1 + filename + ".txt", data);
     }
+
+    bool wordExists(string filename)
+    {
+        string[] entries = File.ReadAllLines(path + filename + ".txt");
+        foreach (string str in entries)
+        {
+            if (str.ToLower().Contains(word.text.ToLower()) || str.ToLower().Contains(translated_word.text.ToLower()))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     public void addWord()
     {
-        Word newWord = new Word(word.text, translated_word.text, 0, DateTime.Today, DateTime.Today);
         string filename = string.Concat(native_Language.text, foreign_language.text);
-        if (fileExists(filename))
+        if (!wordExists(filename))
         {
-            StreamWriter sw = File.AppendText(path + filename + ".txt");
-            sw.WriteLine(newWord.toString());
-            sw.Close();
+            Word newWord = new Word(word.text, translated_word.text, 0, DateTime.Today, DateTime.Today);
+
+            if (fileExists(filename))
+            {
+                StreamWriter sw = File.AppendText(path + filename + ".txt");
+                sw.WriteLine(newWord.toString());
+                sw.Close();
+            }
+            else
+            {
+                FileStream fs = File.Create(path + filename + ".txt");
+                StreamWriter sw = new StreamWriter(fs);
+                sw.WriteLine(newWord.toString());
+                sw.Close();
+                fs.Close();
+            }
+            newWordadded = true;
+            PlayerPrefs.SetFloat("wordCount", PlayerPrefs.GetFloat("wordCount", 0) + 1);
+            PlayerPrefs.SetFloat("dueWords", PlayerPrefs.GetFloat("dueWords", 0) + 1);
+            PlayerPrefs.SetFloat("phase0", PlayerPrefs.GetFloat("phase0", 0) + 1);
+        }
+        //Refresh only for editor
+        UnityEditor.AssetDatabase.Refresh();
+
+    }
+    public void submitPressed()
+    {
+        if (newWordadded)
+        {
+            submitMessage.text = "The word was added!";
         }
         else
         {
-            FileStream fs = File.Create(path + filename + ".txt");
-            StreamWriter sw = new StreamWriter(fs);
-            sw.WriteLine(newWord.toString());
-            sw.Close();
-            fs.Close();
+            submitMessage.text = "Word already exists!";
         }
-        newWordadded = true;
-        PlayerPrefs.SetFloat("wordCount", PlayerPrefs.GetFloat("wordCount",0) + 1);
-        PlayerPrefs.SetFloat("dueWords", PlayerPrefs.GetFloat("dueWords",0) + 1);
-        PlayerPrefs.SetFloat("phase0", PlayerPrefs.GetFloat("phase0", 0) + 1);
-        //Refresh only for editor
-        //UnityEditor.AssetDatabase.Refresh();
-
     }
-
     bool fileExists(string filename)
     {
         return File.Exists(path+filename+".txt");
