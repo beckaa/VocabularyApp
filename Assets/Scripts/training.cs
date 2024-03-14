@@ -111,6 +111,7 @@ public class training : MonoBehaviour
 
     public void checkWord()
     {
+        UIManager.player.increaseWordsTrained();
         //ignore casing?
         string ans = answer.text.ToLower();
         if (ans.Equals(solution.ToLower()))
