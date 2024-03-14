@@ -54,7 +54,7 @@ public class training : MonoBehaviour
     {
         return UnityEngine.Random.Range(0, list.Count);
     }
-    //TODO: use different sprites e.g. random happy sprites and emotes
+
     private void resetPandaFeedback()
     {
         if (!startPanda.activeSelf)
